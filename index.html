@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Ramzfx Central | Your Ultimate Automations And Trading</title>
+  <!-- Font Awesome 6 (free CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Poppins & Inter for modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 10% 20%, rgba(5, 15, 25, 1) 0%, rgba(0, 5, 15, 1) 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #eef5ff;
+      line-height: 1.4;
+      scroll-behavior: smooth;
+    }
+
+    /* animated gradient orb background */
+    .orb-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.4;
+      animation: floatOrb 18s infinite alternate ease-in-out;
+    }
+
+    .orb1 {
+      width: 60vw;
+      height: 60vw;
+      background: #ff4d6d;
+      top: -20%;
+      left: -20%;
+      animation-duration: 22s;
+    }
+
+    .orb2 {
+      width: 50vw;
+      height: 50vw;
+      background: #3b82f6;
+      bottom: -15%;
+      right: -10%;
+      animation-duration: 19s;
+      animation-delay: -3s;
+    }
+
+    .orb3 {
+      width: 45vw;
+      height: 45vw;
+      background: #10b981;
+      top: 40%;
+      left: 60%;
+      opacity: 0.3;
+      animation-duration: 25s;
+      animation-delay: -7s;
+    }
+
+    @keyframes floatOrb {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(8%, 6%) scale(1.12);
+      }
+    }
+
+    /* main container */
+    .portal-container {
+      max-width: 1300px;
+      width: 90%;
+      margin: 3rem auto;
+      padding: 1rem;
+      backdrop-filter: blur(2px);
+    }
+
+    /* header / hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeSlideUp 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      margin-bottom: 1.5rem;
+      color: #cbd5ff;
+    }
+
+    .badge i {
+      color: #60a5fa;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #FFFFFF, #b9d0ff, #7aa2f7);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .glow-text {
+      font-size: 1.25rem;
+      color: #cbd5e6;
+      max-width: 650px;
+      margin: 0 auto;
+      font-weight: 400;
+      backdrop-filter: blur(4px);
+    }
+
+    /* dynamic card grid */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0 3.5rem;
+    }
+
+    .card {
+      background: rgba(15, 25, 45, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
+      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: cardReveal 0.6s forwards;
+      animation-delay: calc(var(--order, 0) * 0.12s);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      background: rgba(25, 40, 65, 0.75);
+      border-color: rgba(96, 165, 250, 0.6);
+      box-shadow: 0 30px 40px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-icon {
+      font-size: 3.2rem;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      background: linear-gradient(145deg, #ffffff, #90b4ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.3px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #b9c7e0;
+      margin-bottom: 1.6rem;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.7rem 1.6rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+    }
+
+    .card-link i {
+      transition: transform 0.2s;
+    }
+
+    .card-link:hover {
+      background: #3b82f6;
+      border-color: transparent;
+      gap: 14px;
+    }
+
+    .card-link:hover i {
+      transform: translateX(4px);
+    }
+
+    /* stats row (decorative animation) */
+    .insight-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 3rem 0 3rem;
+    }
+
+    .stat-item {
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      padding: 1rem 1.8rem;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-weight: 500;
+    }
+
+    .stat-number {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(120deg, #e0eaff, #ffffff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* footer - exactly matching your snippet but enhanced */
+    .main-footer {
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 2.5rem 1rem 2rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      border-radius: 3rem 3rem 0 0;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .footer-links a {
+      color: #e2eaff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 0.8rem;
+      transition: all 0.2s;
+      border-radius: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .footer-links a i {
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+      background: rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .footer-links a:hover i {
+      transform: scale(1.1);
+    }
+
+    .copyright {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .copyright i {
+      font-size: 0.75rem;
+    }
+
+    /* animations */
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes cardReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* subtle pulse for footer */
+    .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.5;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    /* responsiveness */
+    @media (max-width: 680px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+      .platform-grid {
+        gap: 1.2rem;
+      }
+      .footer-links {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+      }
+      .stat-item {
+        padding: 0.6rem 1.2rem;
+      }
+    }
+
+    /* floating particles effect (additional detail) */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      width: 3px;
+      height: 3px;
+      opacity: 0.5;
+      animation: particleFloat 20s infinite linear;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(40px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb-bg">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<div class="particles" id="particles-js"></div>
+
+<main class="portal-container">
+  <div class="hero">
+    <div class="badge">
+      <i class="fas fa-crown"></i> <span>Ramz Ecosystem • Central Command</span> <i class="fas fa-bolt"></i>
+    </div>
+    <h1>Ramz Central Portal</h1>
+    <div class="glow-text">
+      Unified access to premium trading & analytics ecosystems. Stay ahead with real-time insights.
+    </div>
+  </div>
+
+  <!-- dynamic animated cards with the links you specified, plus a brand extra? but keeping original spirit -->
+  <div class="platform-grid">
+    <div class="card" style="--order: 1">
+      <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+      <h3>RamzFX.site</h3>
+      <p>Advanced forex signals, live market analysis, and expert trading tools. Elevate your strategy.</p>
+      <a href="https://ramzfx.site" target="_blank" rel="noopener" class="card-link">
+        Explore Platform <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="card" style="--order: 2">
+      <div class="card-icon"><i class="fas fa-store"></i></div>
+      <h3>RamzTraders.site</h3>
+      <p>Curated trading resources, exclusive indicators & premium store for serious traders.</p>
+      <a href="https://ramztraders.site" target="_blank" rel="noopener" class="card-link">
+        Visit Store <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="card" style="--order: 3">
+      <div class="card-icon"><i class="fas fa-globe"></i></div>
+      <h3>RamzFX Netlify</h3>
+      <p>Lightning-fast deployment hub — real-time dashboard and community tools.</p>
+      <a href="https://ramzfx.netlify.app" target="_blank" rel="noopener" class="card-link">
+        Launch App <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Animated decorative stats: engaging visual flair -->
+  <div class="insight-stats">
+    <div class="stat-item">
+      <i class="fas fa-chart-simple" style="color: #60a5fa"></i>
+      <span class="stat-number" id="statMarkets">12+</span>
+      <span>Markets covered</span>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-clock" style="color: #facc15"></i>
+      <span class="stat-number" id="statUptime">99.9%</span>
+      <span>Uptime reliability</span>
+    </div>
+    <div class="stat-item">
+      <i class="fas fa-users" style="color: #34d399"></i>
+      <span class="stat-number" id="statMembers">4.2k</span>
+      <span>Active community</span>
+    </div>
+  </div>
+
+  <!-- Your exact footer structure but with richer styling & matching animated elements -->
+  <div class="main-footer">
+    <div class="footer-links">
+      <a href="https://ramzfx.site" target="_blank" rel="noopener"><i class="fas fa-chart-line"></i> RamzFX.site</a>
+      <a href="https://ramztraders.site" target="_blank" rel="noopener"><i class="fas fa-store"></i> RamzTraders.site</a>
+      <a href="https://ramzfx.netlify.app" target="_blank" rel="noopener"><i class="fas fa-globe"></i> RamzFX Netlify</a>
+    </div>
+    <div class="copyright">
+      <i class="far fa-copyright"></i> Central Portal — Quick access to all my platforms. Stay updated!
+      <span class="pulse-dot"></span> <span style="font-size:0.75rem">live status</span>
+    </div>
+  </div>
+</main>
+
+<script>
+  // enhanced particle system creation for extra polished animation
+  (function createParticles() {
+    const container = document.getElementById('particles-js');
+    if (!container) return;
+    const particleCount = 65;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const size = Math.random() * 5 + 1.5;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${Math.random() * 15 + 8}s`;
+      particle.style.animationDelay = `${Math.random() * 12}s`;
+      particle.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+      particle.style.background = `rgba(255, 255, 245, ${Math.random() * 0.6 + 0.2})`;
+      container.appendChild(particle);
+    }
+  })();
+
+  // small interactive counter animation for stats (visual)
+  function animateNumber(element, targetValue, suffix = '') {
+    let current = 0;
+    const increment = targetValue > 100 ? Math.ceil(targetValue / 50) : Math.ceil(targetValue / 35);
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= targetValue) {
+        element.innerText = targetValue + suffix;
+        clearInterval(timer);
+      } else {
+        if (suffix === '%') {
+          element.innerText = current + suffix;
+        } else if (suffix === 'k') {
+          element.innerText = (current / 10).toFixed(1) + 'k';
+        } else {
+          element.innerText = current + suffix;
+        }
+      }
+    }, 28);
+  }
+
+  // trigger stats on scroll or after load
+  function initStatsAnimation() {
+    const statMarkets = document.getElementById('statMarkets');
+    const statUptime = document.getElementById('statUptime');
+    const statMembers = document.getElementById('statMembers');
+    if (!statMarkets || !statUptime || !statMembers) return;
+    
+    // set numeric raw values
+    animateNumber(statMarkets, 24, '+');
+    animateNumber(statUptime, 99.9, '%');
+    animateNumber(statMembers, 42, 'k');  // 4.2k will look as 4.2k
+    // override formatting for members: "4.2k"
+    let memberCount = 0;
+    const memberTarget = 42; // meaning 4.2k
+    const memberInterval = setInterval(() => {
+      if (memberCount >= memberTarget) {
+        statMembers.innerText = '4.2k';
+        clearInterval(memberInterval);
+      } else {
+        let val = memberCount / 10;
+        if (val > 4.2) val = 4.2;
+        statMembers.innerText = val.toFixed(1) + 'k';
+        memberCount += Math.ceil(memberTarget / 40);
+      }
+    }, 30);
+    // ensure markets final format: 24+ but we keep +
+    setTimeout(() => {
+      if (statMarkets.innerText !== '24+') statMarkets.innerText = '24+';
+    }, 1500);
+  }
+
+  // smooth hover parallax effect on cards (lightweight)
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 25;
+      const rotateY = (centerX - x) / 25;
+      card.style.transform = `perspective(1200px) translateY(-6px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // optional dynamic timestamp updater in footer copyright: adds current year
+  const copyDiv = document.querySelector('.copyright');
+  if (copyDiv) {
+    const yearSpan = document.createElement('span');
+    yearSpan.style.marginLeft = '8px';
+    yearSpan.style.fontSize = '0.7rem';
+    yearSpan.style.opacity = '0.7';
+    const currentYear = new Date().getFullYear();
+    yearSpan.innerText = `© ${currentYear}`;
+    copyDiv.appendChild(yearSpan);
+  }
+
+  // Intersection Observer to start stats when visible
+  const statsSection = document.querySelector('.insight-stats');
+  if (statsSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          initStatsAnimation();
+          observer.unobserve(statsSection);
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(statsSection);
+  } else {
+    initStatsAnimation();
+  }
+
+  // Additional micro-interaction: footer link hover glow sync
+  const footerLinks = document.querySelectorAll('.footer-links a');
+  footerLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      link.style.transition = 'all 0.2s';
+    });
+  });
+
+  // Console greeting (just for fun)
+  console.log("%c✨ Ramz Central Portal — all systems operational ✨", "color: #60a5fa; font-size: 16px; font-weight: bold;");
+</script>
+</body>
+</html>
